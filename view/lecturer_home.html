@@ -1,0 +1,62 @@
+{{define "lecturer_home"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Dosen</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Daftar Submission Mahasiswa</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Mahasiswa</th>
+          <th>Tugas</th>
+          <th>Status</th>
+          <th>Nilai</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .Submissions}}
+        <tr>
+          <td>{{.StudentName}}</td>
+          <td>{{.AssignmentTitle}}</td>
+          <td>{{.Status}}</td>
+          <td>{{if .Grade}}{{.Grade}}{{else}}-{{end}}</td>
+          <td>
+            <form method="GET" action="/lecturer/grade-form" style="display:inline;">
+              <input type="hidden" name="student_id" value="{{.StudentID}}">
+              <input type="hidden" name="assignment_id" value="{{.AssignmentID}}">
+              <button class="btn success">Beri Nilai</button>
+            </form>
+            <form method="POST" action="/lecturer/reset" style="display:inline;" onsubmit="return confirm('Yakin reset submission ini?');">
+              <input type="hidden" name="student_id" value="{{.StudentID}}">
+              <input type="hidden" name="assignment_id" value="{{.AssignmentID}}">
+              <button type="submit" class="btn danger">Reset</button>
+            </form>
+            <script>
+            function confirmReset() {
+              const confirmed = confirm("Yakin ingin me-reset submission ini?");
+              if (confirmed) {
+                alert("✅ Submission berhasil di-reset!");
+              }
+              return confirmed;
+            }
+            </script>
+
+            {{if eq .Status "reset"}}
+            <script>alert("✅ Submission berhasil di-reset!");</script>
+            {{end}}
+
+          </td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
+{{end}}

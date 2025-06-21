@@ -1,0 +1,39 @@
+
+{{define "grade_form"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Beri Nilai Tugas</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Beri Nilai Tugas</h2>
+
+    <form method="POST" action="/lecturer/grade">
+      <input type="hidden" name="student_id" value="{{.StudentID}}">
+      <input type="hidden" name="assignment_id" value="{{.AssignmentID}}">
+
+      <div class="form-group">
+        <label>Nama Mahasiswa</label>
+        <input type="text" value="{{.StudentName}}" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Judul Tugas</label>
+        <input type="text" value="{{.AssignmentTitle}}" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="grade">Nilai (0 - 100)</label>
+        <input type="number" name="grade" id="grade" min="0" max="100" required>
+      </div>
+
+      <button type="submit" class="btn success">Simpan Nilai</button>
+      <a href="/lecturer/home" class="btn danger" style="margin-left: 10px;">Batal</a>
+    </form>
+  </div>
+</body>
+</html>
+{{end}}

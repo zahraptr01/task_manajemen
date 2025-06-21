@@ -1,0 +1,50 @@
+{{define "assignment_list"}}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Assignment List</title>
+	<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+	<div class="container">
+		<h2>Daftar Tugas Mahasiswa</h2>
+		<p><strong>Nama Mahasiswa:</strong> {{.StudentName}}</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Judul Tugas</th>
+					<th>Deskripsi</th>
+					<th>Deadline</th>
+					<th>Aksi</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{range .Assignments}}
+				<tr>
+					<td>{{.Title}}</td>
+					<td>{{.Description}}</td>
+					<td>{{.Deadline}}</td>
+					<td>
+						<form method="GET" action="/student/submit" style="margin:0;">
+							<input type="hidden" name="assignment_id" value="{{.ID}}">
+							<button type="submit" class="btn success">Submit Tugas</button>
+						</form>
+					</td>
+				</tr>
+				{{end}}
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Alert jika status=submitted -->
+	{{ if eq .Status "submitted" }}
+	<script>
+	alert("✅ Berhasil submit tugas!");
+	</script>
+	{{ end }}
+
+</body>
+</html>
+{{end}}

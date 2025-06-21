@@ -1,0 +1,42 @@
+{{define "submit_form"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Submit Tugas</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Submit Tugas</h2>
+
+    <form method="POST" action="/student/submit" enctype="multipart/form-data">
+      <!-- Hidden assignment ID -->
+      <input type="hidden" name="assignment_id" value="{{.Assignment.ID}}">
+
+      <!-- Assignment title (display only) -->
+      <div class="form-group">
+        <label for="assignment_title">Judul Tugas</label>
+        <input type="text" id="assignment_title" value="{{.Assignment.Title}}" disabled>
+      </div>
+
+      <!-- Student info (hidden + display) -->
+      <div class="form-group">
+        <label for="student_id">Nama Mahasiswa</label>
+        <input type="text" id="student_id" value="{{.StudentName}}" disabled>
+        <input type="hidden" name="student_id" value="{{.StudentID}}">
+      </div>
+
+      <!-- File upload -->
+      <div class="form-group">
+        <label for="file_upload">Upload File Tugas (.pdf, .zip, dll)</label>
+        <input type="file" id="file_upload" name="file" accept=".pdf,.zip,.rar,.docx,.doc,.txt,.xlsx" required>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn success">Kirim Tugas</button>
+    </form>
+  </div>
+</body>
+</html>
+{{end}}
